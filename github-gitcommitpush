@@ -112,7 +112,7 @@ case $option in
 1|3)
 	echo "${yellow}Message for commit or 'n' to exit${reset}"
 	read commitmessage;
-	case $option in
+	case $commitmessage in
 		n)
 		echo "${yellow}exiting...${reset}";
 		echo ""
@@ -158,7 +158,7 @@ case $option in
 2|3)
 	echo ""
 	echo "${cyan}git ${white}push ${yellow}-u ${white}origin master ${yellow}-v ${reset}";
-	git push "https://${user}@github.com/$user/$reponame.git"
+	git push "https://${user}${pass}@github.com/${user}/${reponame}.git"
 	;;
 esac
 
