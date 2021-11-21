@@ -157,8 +157,8 @@ esac
 case $option in 
 2|3)
 	echo ""
-	echo "${cyan}git ${white}push ${yellow}-u ${white}origin master ${yellow}-v ${reset}";
-	git push -u origin master -v
+	echo "${cyan}git ${white}push ${yellow} ${white}origin master ${yellow}-v ${reset}";
+	git push origin master -v
 	;;
 esac
 
