@@ -95,7 +95,7 @@ then
 	# echo "${cyan}git ${white}remote add origin ${yellow}\"git@bitbucket.org:arproduction/$reponame.git\"${reset}"
 	# git remote add origin "git@bitbucket.org:arproduction/$reponame.git"
 	echo "${cyan}git ${white}remote add origin ${yellow}\"https://${user}@github.com/${user}/$reponame.git\"${reset}"
-	git remote add origin "https://${user}@github.com/$user/$reponame.git" 
+	git remote add origin "https://${user}:${pass}@github.com/$user/$reponame.git" 
 
 else
 	echo ""
@@ -158,7 +158,7 @@ case $option in
 2|3)
 	echo ""
 	echo "${cyan}git ${white}push ${yellow} ${white}origin main ${yellow}-v ${reset}";
-	git push origin main -v
+	git push -u origin main -v
 	;;
 esac
 
