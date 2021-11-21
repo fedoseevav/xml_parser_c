@@ -4,8 +4,8 @@
 #define TESTS
 #if !defined(XML_PARCER_H)
 #define XML_PARCER_H
-#if defined(TESTS)
 #include <stdarg.h>
+#if defined(TESTS)
 #include <stdio.h>
 #endif
 #include <stdlib.h>
