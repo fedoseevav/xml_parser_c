@@ -1,5 +1,5 @@
 // Short xml parser for C  
-// Copyright (C) 2021 by Alexander Fedoseev (https://t.me.AlexanderFedoseev1984)
+// Copyright (C) 2021 by Alexander Fedoseev (https://t.me/AlexanderFedoseev1984)
 // This code is licensed under MIT license (see LICENSE.txt for details)
 #define TESTS
 #if !defined(XML_PARCER_H)

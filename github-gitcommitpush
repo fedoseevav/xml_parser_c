@@ -91,10 +91,8 @@ output=$(git remote -v)
 if [ -z "$output" ];
 then	
 	echo ""
-	echo "${yellow}No remotes adding origin...${reset}"
-	# echo "${cyan}git ${white}remote add origin ${yellow}\"git@bitbucket.org:arproduction/$reponame.git\"${reset}"
-	# git remote add origin "git@bitbucket.org:arproduction/$reponame.git"
-	echo "${cyan}git ${white}remote add origin ${yellow}\"https://${user}@github.com/${user}/$reponame.git\"${reset}"
+	echo "${yellow}No remotes adding origin...${reset}"	
+	echo "${cyan}git ${white}remote add origin ${yellow}\"https://${user}:${pass}@github.com/${user}/$reponame.git\"${reset}"
 	git remote add origin "https://${user}:${pass}@github.com/$user/$reponame.git" 
 
 else
