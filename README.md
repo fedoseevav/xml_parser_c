@@ -54,7 +54,7 @@ This table shows how these two parameters `access` and `is_copy` change the targ
 ## What about single tags?
 For example input string is as follows:
 ```xml
-<Error><Code>AccessDenied</Code><single /></Error>
+<Error><Code>AccessDenied</Code><single name="any"/></Error>
 ```
 Pattern like so
 ```c

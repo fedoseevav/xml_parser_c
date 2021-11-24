@@ -469,11 +469,14 @@ const char* tag_parse( const char* data,
                 }
                 
             break;
-
+            case '\0':
+                goto fail;
+            break;
         }
         d++;
     }
 
+    fail:;
     //Fail
     return 0;
     
@@ -826,6 +829,7 @@ int main()
     test_xmls[4] = "<!one>";
     test_xmls[5] = "<one name=\"<two>no</two>\" type=\"Ха-ха-ха! Ну ты даешь!\" mime=\"text/jpeg\"><two name=\"uio\" n=\"bla bla bla\" ><three name=\"kel mel\">yes</three></two></one>";
     test_xmls[6] = "<!DOCTYPE htmln html=\"html1\"><!DOCTYPE\r\nHTML\rTTO=\"0\"\nPUBLIC shmublic  html=\"html2\"  \"-//W3C//DTD HTML 4.01//EN\"   \"http://www.w3.org/TR/html4/strict.dtd\"><html> <head>   <title>!DOCTYPE</title>   <meta charset=\"utf-8\"/> </head> <body><p 1>P1</p><p 2>P2</p><p 3>P3</p><p 4>P4</p><p><p 11>PP1</p><p 12>PP2</p><p 13>PP3</p></p>  <p>Разум — это Будда, а прекращение умозрительного мышления — это путь.   Перестав мыслить понятиями и размышлять о путях существования и небытия,   о душе и плоти, о пассивном и активном и о других подобных вещах,   начинаешь осознавать, что разум — это Будда,   что Будда — это сущность разума,   и что разум подобен бесконечности.</p> </body><body/> </html>";
+    test_xmls[7] = "<root>\n\t<element1 />\n\t<!--This is the comment-->\n\t<code><![CDATA[9879879879]]></code>\n\t<!--This is the comment # 2-->\n\t<element2 color=\"black\"/>\n</root>";
     
     test_patterns[0] = "Error"; 
     test_patterns[1] = "error";
@@ -860,6 +864,7 @@ int main()
     test_patterns[28] = "!one";    
     test_patterns[29] = "html.body.p[3].p[0]@11";
     test_patterns[30] = "Error..";
+    test_patterns[31] = "root.code.![CDATA[";
 
     int test_flags[] = {
         0, 0, //0
@@ -902,7 +907,14 @@ int main()
     test_expected_results[27] = "yes";
     test_expected_results[28] = "<two>no</two>";
     test_expected_results[29] = "<!one>";
-
+    test_expected_results[30] = "11";
+    test_expected_results[31] = "<![CDATA[9879879879]]>";
+    test_expected_results[32] = "9879879879";
+    test_expected_results[33] = "]]>";
+    test_expected_results[34] = test_xmls[7] + 56;
+    test_expected_results[35] = test_xmls[7] + 65;
+    test_expected_results[36] = test_xmls[7] + 75;
+    test_expected_results[37] = test_xmls[7] + 78;
 
     int test_cases[] = {
     //xml,  pattern, flag, expected
@@ -955,7 +967,18 @@ int main()
         3,       27,    3,       28,//42
 
         4,       28,    3,       13, //43
-        0,       30,    3,        0 //44
+        0,       30,    3,        0, //44
+        6,       29,    3,       13, //45
+        6,       29,    1,       30, //46
+        
+        7,       31,    1,       31, //47
+        7,       31,    3,       32, //48
+        7,       31,    5,       33, //49
+        7,       31,    7,       13, //50
+        7,       31,    0,       34, //51
+        7,       31,    2,       35, //52
+        7,       31,    4,       36, //53
+        7,       31,    6,       37 //54
     };
 
     
@@ -991,7 +1014,7 @@ int main()
 
         STRLEN(text, textLength)
         STRLEN(pattern, patternLength)
-        size_t dataLimit = (size_t)text + (size_t)textLength;
+        size_t dataLimit = i % 2 == 0 ? (size_t)text + (size_t)textLength : -1;
 
         result = xml_parse(text, dataLimit, pattern, flags[0], flags[1]);
 
